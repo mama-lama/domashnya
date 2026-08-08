@@ -44,54 +44,58 @@
   });
 
   const track = document.getElementById('reviewsTrack');
-  const slides = Array.from(track.children);
-  const prevBtn = document.getElementById('prevReview');
-  const nextBtn = document.getElementById('nextReview');
-  const dotsWrap = document.getElementById('reviewDots');
-  let currentIndex = 0;
+  if (track) {
+    const slides = Array.from(track.children);
+    const prevBtn = document.getElementById('prevReview');
+    const nextBtn = document.getElementById('nextReview');
+    const dotsWrap = document.getElementById('reviewDots');
+    let currentIndex = 0;
 
-  function renderDots() {
-    dotsWrap.innerHTML = '';
-    slides.forEach(function (_, index) {
-      const dot = document.createElement('button');
-      dot.className = 'slider-dot' + (index === currentIndex ? ' is-active' : '');
-      dot.type = 'button';
-      dot.setAttribute('aria-label', 'Перейти к отзыву ' + (index + 1));
-      dot.addEventListener('click', function () {
-        goToSlide(index);
+    function renderDots() {
+      dotsWrap.innerHTML = '';
+      slides.forEach(function (_, index) {
+        const dot = document.createElement('button');
+        dot.className = 'slider-dot' + (index === currentIndex ? ' is-active' : '');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', 'Перейти к отзыву ' + (index + 1));
+        dot.addEventListener('click', function () {
+          goToSlide(index);
+        });
+        dotsWrap.appendChild(dot);
       });
-      dotsWrap.appendChild(dot);
+    }
+
+    function goToSlide(index) {
+      currentIndex = (index + slides.length) % slides.length;
+      track.style.transform = 'translateX(' + (-currentIndex * 100) + '%)';
+      renderDots();
+    }
+
+    prevBtn.addEventListener('click', function () {
+      goToSlide(currentIndex - 1);
     });
-  }
 
-  function goToSlide(index) {
-    currentIndex = (index + slides.length) % slides.length;
-    track.style.transform = 'translateX(' + (-currentIndex * 100) + '%)';
-    renderDots();
-  }
+    nextBtn.addEventListener('click', function () {
+      goToSlide(currentIndex + 1);
+    });
 
-  prevBtn.addEventListener('click', function () {
-    goToSlide(currentIndex - 1);
-  });
-
-  nextBtn.addEventListener('click', function () {
-    goToSlide(currentIndex + 1);
-  });
-
-  let autoPlay = setInterval(function () {
-    goToSlide(currentIndex + 1);
-  }, 6000);
-
-  function resetAutoplay() {
-    clearInterval(autoPlay);
-    autoPlay = setInterval(function () {
+    let autoPlay = setInterval(function () {
       goToSlide(currentIndex + 1);
     }, 6000);
-  }
 
-  [prevBtn, nextBtn, dotsWrap].forEach(function (element) {
-    element.addEventListener('click', resetAutoplay);
-  });
+    function resetAutoplay() {
+      clearInterval(autoPlay);
+      autoPlay = setInterval(function () {
+        goToSlide(currentIndex + 1);
+      }, 6000);
+    }
+
+    [prevBtn, nextBtn, dotsWrap].forEach(function (element) {
+      element.addEventListener('click', resetAutoplay);
+    });
+
+    goToSlide(0);
+  }
 
   const menuTabs = document.getElementById('menuTabs');
   const menuButtons = menuTabs ? Array.from(menuTabs.querySelectorAll('.menu-tab')) : [];
@@ -142,7 +146,6 @@
   }
 
   filterMenu(getInitialCategory());
-  goToSlide(0);
 
   // Rooms slider + fullscreen lightbox carousel
   const roomsSlider = document.getElementById('roomsSlider');

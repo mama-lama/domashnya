@@ -149,7 +149,8 @@
       transition: .2s ease;
     }
     .category-link:hover,
-    .category-link:focus-visible {
+    .category-link:focus-visible,
+    .category-link.active {
       background: var(--olive-700);
       color: white;
       outline: none;
@@ -412,7 +413,7 @@
     </header>
 
     <div class="category-nav-wrap" aria-label="Категории меню">
-      <nav class="category-nav"><a class="category-link" href="#soups">Первые блюда</a><a class="category-link" href="#salads">Салаты</a><a class="category-link" href="#main">Вторые блюда</a><a class="category-link" href="#order">Блюда под заказ</a><a class="category-link" href="#sides">Гарниры</a><a class="category-link" href="#drinks">Напитки</a><a class="category-link" href="#bakery">Выпечка</a><a class="category-link" href="#bread">Хлеб</a><a class="category-link" href="#extra">Дополнительно</a></nav>
+      <nav class="category-nav"><a class="category-link active" href="#all">Все блюда</a><a class="category-link" href="#soups">Первые блюда</a><a class="category-link" href="#salads">Салаты</a><a class="category-link" href="#main">Вторые блюда</a><a class="category-link" href="#order">Блюда под заказ</a><a class="category-link" href="#sides">Гарниры</a><a class="category-link" href="#drinks">Напитки</a><a class="category-link" href="#bakery">Выпечка</a><a class="category-link" href="#bread">Хлеб</a><a class="category-link" href="#extra">Дополнительно</a></nav>
     </div>
 
     <main>
@@ -1740,5 +1741,38 @@
       <a class="back-to-top" href="#top">Вернуться в начало</a>
     </footer>
   </div>
+<script>
+  (function() {
+    const nav = document.querySelector('.category-nav');
+    if (!nav) return;
+    const links = nav.querySelectorAll('.category-link');
+    const sections = document.querySelectorAll('.menu-section');
+
+    function filter(target) {
+      links.forEach(function(l) { l.classList.toggle('active', l === target); });
+      const id = target.getAttribute('href').slice(1);
+      if (id === 'all') {
+        sections.forEach(function(s) { s.style.display = ''; s.hidden = false; });
+      } else {
+        sections.forEach(function(s) {
+          const show = s.id === id;
+          s.hidden = !show;
+          s.style.display = show ? '' : 'none';
+        });
+      }
+    }
+
+    links.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        filter(link);
+        const navTop = document.querySelector('.category-nav-wrap');
+        if (navTop) {
+          window.scrollTo({ top: navTop.offsetTop - 10, behavior: 'smooth' });
+        }
+      });
+    });
+  })();
+</script>
 </body>
 </html>
