@@ -1,0 +1,269 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Setting;
+use App\Models\Category;
+use App\Models\MenuItem;
+use App\Models\Review;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\Services\MenuPdfService;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
+
+class AdminController extends Controller
+{
+    // Dashboard Stats
+    public function dashboard()
+    {
+        $menuCount = MenuItem::count();
+        $reviewCount = Review::count();
+        $activeReviewCount = Review::where('is_active', true)->count();
+        $latestReviews = Review::latest()->take(3)->get();
+
+        return view('admin.dashboard', compact('menuCount', 'reviewCount', 'activeReviewCount', 'latestReviews'));
+    }
+
+    // Settings Editor
+    public function settings()
+    {
+        $settings = Setting::all()->groupBy('group');
+        return view('admin.settings', compact('settings'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $data = $request->validate([
+            'settings' => ['required', 'array'],
+        ]);
+
+        foreach ($data['settings'] as $key => $value) {
+            Setting::where('key', $key)->update(['value' => $value]);
+        }
+
+        return back()->with('success', 'Настройки успешно обновлены!');
+    }
+
+    // Menu Items CRUD
+    public function menuIndex()
+    {
+        $menuItems = MenuItem::latest()->get();
+        $categories = Category::orderBy('sort_order')->pluck('name', 'slug');
+        return view('admin.menu.index', compact('menuItems', 'categories'));
+    }
+
+    public function menuCreate()
+    {
+        $categories = Category::orderBy('sort_order')->pluck('name', 'slug');
+        return view('admin.menu.edit', compact('categories'));
+    }
+
+    public function menuStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'ingredients' => ['nullable', 'string'],
+            'price' => ['required', 'integer', 'min:0'],
+            'weight' => ['nullable', 'string', 'max:50'],
+            'category' => ['required', 'array', 'min:1'],
+            'category.*' => ['string', 'max:50'],
+            'new_category' => ['nullable', 'string', 'max:50'],
+            'tag' => ['nullable', 'string', 'max:50'],
+            'image' => ['nullable', 'image', 'max:10240'], // Max 10MB image
+            'image_url' => ['nullable', 'url', 'max:2048'], // Fallback url input
+            'is_featured' => ['boolean'],
+        ]);
+
+        if (in_array('__new', $validated['category'], true) && !$request->filled('new_category')) {
+            return back()->withInput()->withErrors(['new_category' => 'Укажите название новой категории.']);
+        }
+
+        $validated['category'] = implode(',', $this->resolveCategorySlugs($request));
+        $validated['is_featured'] = $request->boolean('is_featured');
+        unset($validated['new_category']);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('menu', 'public');
+            $validated['image_url'] = '/storage/' . $path;
+        }
+
+        MenuItem::create($validated);
+
+        return redirect()->route('admin.menu.index')->with('success', 'Блюдо успешно добавлено!');
+    }
+
+    public function menuEdit(MenuItem $menuItem)
+    {
+        $categories = Category::orderBy('sort_order')->pluck('name', 'slug');
+        return view('admin.menu.edit', compact('menuItem', 'categories'));
+    }
+
+    public function menuUpdate(Request $request, MenuItem $menuItem)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'ingredients' => ['nullable', 'string'],
+            'price' => ['required', 'integer', 'min:0'],
+            'weight' => ['nullable', 'string', 'max:50'],
+            'category' => ['required', 'array', 'min:1'],
+            'category.*' => ['string', 'max:50'],
+            'new_category' => ['nullable', 'string', 'max:50'],
+            'tag' => ['nullable', 'string', 'max:50'],
+            'image' => ['nullable', 'image', 'max:10240'],
+            'image_url' => ['nullable', 'string', 'max:2048'],
+            'is_featured' => ['boolean'],
+        ]);
+
+        if (in_array('__new', $validated['category'], true) && !$request->filled('new_category')) {
+            return back()->withInput()->withErrors(['new_category' => 'Укажите название новой категории.']);
+        }
+
+        $validated['category'] = implode(',', $this->resolveCategorySlugs($request));
+        $validated['is_featured'] = $request->boolean('is_featured');
+        unset($validated['new_category']);
+
+        if ($request->hasFile('image')) {
+            // Delete old image if it was uploaded locally
+            if ($menuItem->image_url && str_starts_with($menuItem->image_url, '/storage/')) {
+                Storage::disk('public')->delete(str_replace('/storage/', '', $menuItem->image_url));
+            }
+            $path = $request->file('image')->store('menu', 'public');
+            $validated['image_url'] = '/storage/' . $path;
+        }
+
+        $menuItem->update($validated);
+
+        return redirect()->route('admin.menu.index')->with('success', 'Блюдо успешно обновлено!');
+    }
+
+    public function menuDestroy(MenuItem $menuItem)
+    {
+        if ($menuItem->image_url && str_starts_with($menuItem->image_url, '/storage/')) {
+            Storage::disk('public')->delete(str_replace('/storage/', '', $menuItem->image_url));
+        }
+
+        $menuItem->delete();
+        return redirect()->route('admin.menu.index')->with('success', 'Блюдо успешно удалено!');
+    }
+
+    // Returns the slugs of the selected categories, creating a new one when the
+    // "new category" option (__new) was chosen in the dish form.
+    private function resolveCategorySlugs(Request $request): array
+    {
+        $slugs = $request->input('category', []);
+
+        if (!in_array('__new', $slugs, true)) {
+            return array_values($slugs);
+        }
+
+        $slugs = array_values(array_diff($slugs, ['__new']));
+        $slugs[] = $this->createCategory(trim($request->input('new_category')));
+
+        return $slugs;
+    }
+
+    private function createCategory(string $name): string
+    {
+        $baseSlug = Str::slug($name) !== '' ? Str::slug($name) : 'category';
+
+        $slug = $baseSlug;
+        $suffix = 2;
+        while (Category::where('slug', $slug)->exists()) {
+            $slug = $baseSlug . '-' . $suffix++;
+        }
+
+        Category::create([
+            'slug' => $slug,
+            'name' => $name,
+            'sort_order' => (int) Category::max('sort_order') + 10,
+        ]);
+
+        return $slug;
+    }
+
+    public function downloadMenuPdf()
+    {
+        $path = public_path('menu.pdf');
+
+        // Always regenerate the PDF so the download reflects current
+        // settings and menu data.
+        Artisan::call('menu:generate-pdf');
+
+        if (!file_exists($path)) {
+            return redirect()->route('admin.menu.index')
+                ->with('error', 'Не удалось сгенерировать PDF меню. Подробности в storage/logs/pdf_generate.log');
+        }
+
+        return response()->download($path, 'menu.pdf');
+    }
+
+    public function previewMenu(MenuPdfService $service)
+    {
+        $data = $service->getMenuData();
+        return view('pdf.menu', $data);
+    }
+
+    // Reviews CRUD & Moderation
+    public function reviewsIndex()
+    {
+        $reviews = Review::latest()->get();
+        return view('admin.reviews.index', compact('reviews'));
+    }
+
+    public function reviewsCreate()
+    {
+        return view('admin.reviews.edit');
+    }
+
+    public function reviewsStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'text' => ['required', 'string'],
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'is_active' => ['boolean'],
+        ]);
+
+        $validated['is_active'] = $request->has('is_active');
+
+        Review::create($validated);
+        return redirect()->route('admin.reviews.index')->with('success', 'Отзыв успешно добавлен!');
+    }
+
+    public function reviewsEdit(Review $review)
+    {
+        return view('admin.reviews.edit', compact('review'));
+    }
+
+    public function reviewsUpdate(Request $request, Review $review)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'text' => ['required', 'string'],
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'is_active' => ['boolean'],
+        ]);
+
+        $validated['is_active'] = $request->has('is_active');
+
+        $review->update($validated);
+        return redirect()->route('admin.reviews.index')->with('success', 'Отзыв успешно обновлен!');
+    }
+
+    public function reviewsToggleActive(Review $review)
+    {
+        $review->update(['is_active' => !$review->is_active]);
+        return back()->with('success', 'Статус публикации отзыва изменен!');
+    }
+
+    public function reviewsDestroy(Review $review)
+    {
+        $review->delete();
+        return redirect()->route('admin.reviews.index')->with('success', 'Отзыв успешно удален!');
+    }
+}
