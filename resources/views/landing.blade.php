@@ -3,8 +3,134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ $settings['site_title'] ?? 'Домашняя кухня у дороги' }}</title>
+
+  <!-- Primary SEO Meta Tags -->
+  <title>{{ $settings['site_title'] ?? 'Кафе «Домашняя кухня» и ночлег на трассе М-4 Дон (465 км, д. Князево) — вкусные обеды и комнаты под съём' }}</title>
+  <meta name="description" content="{{ $settings['site_description'] ?? 'Уютное придорожное кафе «Домашняя кухня» на 465 км трассы М-4 Дон (д. Князево). Домашние обеды (борщ, солянка, выпечка), сад с фонтаном, комнаты под съём для ночлега и удобная парковка.' }}" />
+  <meta name="keywords" content="кафе на трассе м4 дон, придорожное кафе м4, мотель м4 дон князево, где поесть на трассе м4, домашняя кухня трасса м4, ночлег м4 дон князево, комнаты под съем м4 дон, 465 км м4 дон кафе, столовая у дороги, кафе с садом и фонтаном" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="{{ url()->current() }}" />
+
+  <!-- Open Graph / Facebook / Telegram -->
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Кафе «Домашняя кухня» и ночлег на трассе М-4 Дон (465 км)" />
+  <meta property="og:description" content="Уютное кафе у дороги: сытные домашние обеды, свежая выпечка, зеленый сад с фонтаном и комнаты под съём для ночлега автопутешественников." />
+  <meta property="og:url" content="{{ url()->current() }}" />
+  <meta property="og:site_name" content="Домашняя кухня — Кафе и мотель на М-4 Дон" />
+  <meta property="og:image" content="{{ asset('images/hero.png') }}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Придорожное кафе и мотель Домашняя кухня на трассе М-4 Дон" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Кафе «Домашняя кухня» и ночлег на трассе М-4 Дон (465 км)" />
+  <meta name="twitter:description" content="Вкусные домашние обеды, ночлег в уютных комнатах и тихий отдых у дороги М-4 Дон." />
+  <meta name="twitter:image" content="{{ asset('images/hero.png') }}" />
+
+  <!-- Geo Meta Tags for Yandex Maps & Local SEO -->
+  <meta name="geo.region" content="RU-VOR" />
+  <meta name="geo.placename" content="д. Князево, ул. Сенновские Выселки, 12" />
+  <meta name="geo.position" content="52.3400;39.0800" />
+  <meta name="ICBM" content="52.3400, 39.0800" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any" />
+
   <link rel="stylesheet" href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}" />
+
+  <!-- Schema.org Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@graph": [
+      {
+        "@@type": ["CafeOrCoffeeShop", "Motel"],
+        "@@id": "{{ url('/') }}#organization",
+        "name": "Домашняя кухня",
+        "alternateName": "Кафе и мотель у дороги на 465 км трассы М-4 Дон",
+        "description": "Уютное придорожное кафе с домашней кухней, садом с фонтаном, верандой и комнатами под съём для отдыха автопутешественников.",
+        "url": "{{ url('/') }}",
+        "telephone": "{{ $settings['phone_raw'] ?? '+79991234567' }}",
+        "priceRange": "₽₽",
+        "servesCuisine": ["Русская", "Домашняя"],
+        "image": "{{ asset('images/hero.png') }}",
+        "address": {
+          "@@type": "PostalAddress",
+          "streetAddress": "{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}",
+          "addressLocality": "д. Князево",
+          "addressRegion": "Воронежская область",
+          "addressCountry": "RU"
+        },
+        "geo": {
+          "@@type": "GeoCoordinates",
+          "latitude": 52.3400,
+          "longitude": 39.0800
+        },
+        "openingHoursSpecification": [
+          {
+            "@@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            "opens": "08:00",
+            "closes": "22:00"
+          }
+        ],
+        "hasMenu": "{{ route('menu') }}"
+      },
+      {
+        "@@type": "BreadcrumbList",
+        "@@id": "{{ url('/') }}#breadcrumb",
+        "itemListElement": [
+          {
+            "@@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "{{ url('/') }}"
+          }
+        ]
+      },
+      {
+        "@@type": "FAQPage",
+        "@@id": "{{ url('/') }}#faq",
+        "mainEntity": [
+          {
+            "@@type": "Question",
+            "name": "Где находится кафе «Домашняя кухня» на трассе М-4 «Дон»?",
+            "acceptedAnswer": {
+              "@@type": "Answer",
+              "text": "Кафе расположено на 465-м километре трассы М-4 «Дон» по адресу: Воронежская область, деревня Князево, ул. Сенновские Выселки, д. 12."
+            }
+          },
+          {
+            "@@type": "Question",
+            "name": "Есть ли в кафе комнаты для ночлега и отдыха у дороги?",
+            "acceptedAnswer": {
+              "@@type": "Answer",
+              "text": "Да, у нас есть комфортные и тихие комнаты под съём, где автопутешественники могут выспаться и отдохнуть в дороге."
+            }
+          },
+          {
+            "@@type": "Question",
+            "name": "Какой режим работы у кафе «Домашняя кухня»?",
+            "acceptedAnswer": {
+              "@@type": "Answer",
+              "text": "Кафе работает ежедневно с 08:00 до 22:00. Горячие обеды, супы и выпечка всегда подаются свежими."
+            }
+          },
+          {
+            "@@type": "Question",
+            "name": "Есть ли парковка и условия для отдыха с детьми?",
+            "acceptedAnswer": {
+              "@@type": "Answer",
+              "text": "Да, на территории обустроена удобная парковка, а также зеленый сад с фонтаном и летняя веранда для отдыха всей семьей."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="header">
@@ -46,7 +172,7 @@
             <img src="{{ asset('images/hero.png') }}?v={{ filemtime(public_path('images/hero.png')) }}" alt="Домашняя кухня — уютное кафе у дороги" loading="eager" />
           </div>
           <div class="hero__content">
-            <h1>{{ $settings['hero_title'] ?? 'Домашняя кухня, сад и спокойный отдых у дороги' }}</h1>
+            <h1>{{ $settings['hero_title'] ?? 'Домашняя кухня, ночлег и спокойный отдых на трассе М-4 «Дон»' }}</h1>
             <p>
               {{ $settings['hero_description'] ?? 'Уютное придорожное кафе с тёплой домашней атмосферой, зелёным садом, фонтаном, верандой, комнатами под съём и возможностью провести семейное торжество. Заезжайте отдохнуть, вкусно поесть и перевести дух в дороге.' }}
             </p>
@@ -129,7 +255,7 @@
     <section class="section" id="menu">
       <div class="container">
         <div class="eyebrow">Популярное</div>
-        <h2 class="section-title">Любимые блюда наших гостей</h2>
+        <h2 class="section-title">Популярные домашние блюда нашего кафе на М-4</h2>
         <p class="section-subtitle">
           Здесь собраны самые популярные позиции из нашего меню. Чтобы увидеть полное меню с фильтрами по категориям, нажмите кнопку ниже.
         </p>
@@ -195,7 +321,7 @@
     <section class="section" id="garden">
       <div class="container">
         <div class="eyebrow">Сад и веранда</div>
-        <h2 class="section-title">Место, где приятно остановиться и просто отдохнуть</h2>
+        <h2 class="section-title">Зелёный сад с фонтаном и веранда для отдыха у дороги</h2>
         <p class="section-subtitle">
           У кафе есть зелёный сад, фонтан, цветущая территория и уютная веранда. Здесь приятно посидеть с семьёй, спокойно пообедать на свежем воздухе или выпить чай после долгой дороги.
         </p>
@@ -232,7 +358,7 @@
     <section class="section" id="rooms-events">
       <div class="container">
         <div class="eyebrow">Комнаты и торжества</div>
-        <h2 class="section-title">Не только кафе, но и удобное место для отдыха и встреч</h2>
+        <h2 class="section-title">Комнаты под съём, ночлег и банкеты у дороги М-4 Дон</h2>
         <p class="section-subtitle">
           У нас можно не только пообедать по пути, но и остановиться на отдых, а также провести тёплое семейное событие в уютной атмосфере.
         </p>
@@ -383,7 +509,7 @@
     <section class="section" id="contacts">
       <div class="container">
         <div class="eyebrow">Карта и контакты</div>
-        <h2 class="section-title">Заезжайте на вкусный обед и спокойный отдых</h2>
+        <h2 class="section-title">Контакты и схема проезда на 465 км трассы М-4 «Дон» (д. Князево)</h2>
         <div class="contacts-grid">
           <article class="contact-card">
             <h3>Контакты</h3>
@@ -441,6 +567,44 @@
               <a class="btn btn--primary" href="https://yandex.ru/maps/org/domashnyaya_kukhnya/160800142944/" target="_blank" rel="noopener noreferrer">Построить маршрут</a>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq" style="background: var(--bg-surface, #fff); border-top: 1px solid var(--border, #eee);">
+      <div class="container">
+        <div class="eyebrow">Полезная информация</div>
+        <h2 class="section-title">Часто задаваемые вопросы (FAQ)</h2>
+        <p class="section-subtitle">Ответы на популярные вопросы автопутешественников о кафе и ночлеге на 465 км М-4 Дон</p>
+
+        <div style="max-width: 840px; margin: 36px auto 0; display: flex; flex-direction: column; gap: 16px;">
+          <details style="background: var(--bg, #f9f9f9); border: 1px solid var(--border, #e5e5e5); border-radius: 12px; padding: 18px 24px; cursor: pointer;">
+            <summary style="font-weight: 700; font-size: 17px; color: var(--text, #222);">Где находится кафе «Домашняя кухня» на трассе М-4 «Дон»?</summary>
+            <p style="margin-top: 12px; color: var(--muted, #666); line-height: 1.6;">
+              Кафе расположено на 465-м километре трассы М-4 «Дон» по адресу: Воронежская область, деревня Князево, ул. Сенновские Выселки, 12 (удобный съезд с трассы, направление на юг).
+            </p>
+          </details>
+
+          <details style="background: var(--bg, #f9f9f9); border: 1px solid var(--border, #e5e5e5); border-radius: 12px; padding: 18px 24px; cursor: pointer;">
+            <summary style="font-weight: 700; font-size: 17px; color: var(--text, #222);">Есть ли в кафе комнаты для ночлега и отдыха у дороги?</summary>
+            <p style="margin-top: 12px; color: var(--muted, #666); line-height: 1.6;">
+              Да! У нас обустроены уютные и тихие комнаты под съём для автопутешественников, где можно хорошо выспаться, принять душ и восстановить силы перед продолжением пути.
+            </p>
+          </details>
+
+          <details style="background: var(--bg, #f9f9f9); border: 1px solid var(--border, #e5e5e5); border-radius: 12px; padding: 18px 24px; cursor: pointer;">
+            <summary style="font-weight: 700; font-size: 17px; color: var(--text, #222);">Какой режим работы у кафе «Домашняя кухня»?</summary>
+            <p style="margin-top: 12px; color: var(--muted, #666); line-height: 1.6;">
+              Кафе работает ежедневно с 08:00 до 22:00. Горячие супы (борщ, солянка), основные блюда, свежая домашняя выпечка и горячие напитки всегда подаются свежими.
+            </p>
+          </details>
+
+          <details style="background: var(--bg, #f9f9f9); border: 1px solid var(--border, #e5e5e5); border-radius: 12px; padding: 18px 24px; cursor: pointer;">
+            <summary style="font-weight: 700; font-size: 17px; color: var(--text, #222);">Есть ли удобная парковка и условия для отдыха с детьми?</summary>
+            <p style="margin-top: 12px; color: var(--muted, #666); line-height: 1.6;">
+              Да, для наших гостей предусмотрена вместительная и безопасная парковка. На территории кафе есть зеленый сад с журчащим фонтаном, цветник и летняя веранда.
+            </p>
+          </details>
         </div>
       </div>
     </section>

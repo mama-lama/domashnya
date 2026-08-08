@@ -3,8 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Меню — {{ $settings['site_title'] ?? 'Домашняя кухня у дороги' }}</title>
+
+  <!-- Primary SEO Meta Tags -->
+  <title>Меню придорожного кафе «Домашняя кухня» — Цены, блюда и выпечка на М-4 Дон (465 км)</title>
+  <meta name="description" content="Полное меню придорожного кафе «Домашняя кухня» на 465 км трассы М-4 Дон (д. Князево). Горячие супы (борщ, солянка), вторые блюда, выпечка, чай и кофе. Доступные цены!" />
+  <meta name="keywords" content="меню придорожного кафе м4, цены меню домашняя кухня князево, борщ солянка трасса м4, выпечка у дороги м4 дон, пообедать на м4 дон меню" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="{{ route('menu') }}" />
+
+  <!-- Open Graph -->
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:type" content="restaurant.menu" />
+  <meta property="og:title" content="Меню кафе «Домашняя кухня» на трассе М-4 Дон" />
+  <meta property="og:description" content="Посмотрите наше меню: свежие домашние обеды, выпечка и горячие напитки на 465 км М-4 Дон." />
+  <meta property="og:url" content="{{ route('menu') }}" />
+  <meta property="og:site_name" content="Домашняя кухня" />
+  <meta property="og:image" content="{{ asset('images/hero.png') }}" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Меню придорожного кафе «Домашняя кухня» на М-4 Дон" />
+  <meta name="twitter:description" content="Цены и онлайн-меню домашних блюд на трассе М-4 Дон." />
+  <meta name="twitter:image" content="{{ asset('images/hero.png') }}" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any" />
+
   <link rel="stylesheet" href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}" />
+
+  <!-- Schema.org Microdata (Menu, MenuItem, BreadcrumbList) -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@graph": [
+      {
+        "@@type": "Menu",
+        "@@id": "{{ route('menu') }}#menu",
+        "name": "Меню придорожного кафе «Домашняя кухня»",
+        "description": "Полное меню горячих блюд, домашних супов, выпечки и напитков кафе на 465 км трассы М-4 Дон.",
+        "url": "{{ route('menu') }}",
+        "hasMenuSection": [
+          @foreach($categories as $category)
+          {
+            "@@type": "MenuSection",
+            "name": "{{ $category->name }}",
+            "hasMenuItem": [
+              @php
+                $categoryItems = $menuItems->filter(fn($item) => in_array($category->slug, $item->categorySlugs(), true));
+              @endphp
+              @foreach($categoryItems as $item)
+              {
+                "@@type": "MenuItem",
+                "name": "{{ $item->name }}",
+                "description": "{{ $item->description }}",
+                "image": "{{ $item->image_url }}",
+                "offers": {
+                  "@@type": "Offer",
+                  "price": "{{ $item->price }}",
+                  "priceCurrency": "RUB"
+                }
+              }@if(!$loop->last),@endif
+              @endforeach
+            ]
+          }@if(!$loop->last),@endif
+          @endforeach
+        ]
+      },
+      {
+        "@@type": "BreadcrumbList",
+        "@@id": "{{ route('menu') }}#breadcrumb",
+        "itemListElement": [
+          {
+            "@@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "{{ url('/') }}"
+          },
+          {
+            "@@type": "ListItem",
+            "position": 2,
+            "name": "Меню кафе",
+            "item": "{{ route('menu') }}"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="header">
@@ -42,7 +127,7 @@
     <section class="section" id="menu" style="padding-top: 48px;">
       <div class="container">
         <div class="eyebrow">Меню кафе</div>
-        <h1 class="section-title">Домашние блюда, выпечка и горячие напитки</h1>
+        <h1 class="section-title">Меню придорожного кафе «Домашняя кухня» на М-4 Дон</h1>
         <p class="section-subtitle">
           Полное меню кафе. Выберите категорию, чтобы быстро найти нужное.
         </p>

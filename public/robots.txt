@@ -1,2 +1,29 @@
+# Robots.txt for Cafe & Motel "Domashnyaya Kuhnya" (465 km M-4 Don)
+
+User-agent: Yandex
+Allow: /
+Allow: /menu
+Allow: /images/
+Allow: /css/
+Allow: /js/
+Disallow: /admin
+Disallow: /admin/
+Disallow: /storage/*.pdf
+Clean-param: v
+
+User-agent: Googlebot
+Allow: /
+Allow: /menu
+Allow: /images/
+Allow: /css/
+Allow: /js/
+Disallow: /admin
+Disallow: /admin/
+
 User-agent: *
-Disallow:
+Allow: /
+Allow: /menu
+Disallow: /admin
+Disallow: /admin/
+
+Sitemap: /sitemap.xml
