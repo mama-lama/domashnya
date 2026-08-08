@@ -6,8 +6,8 @@
     RewriteRule ^(.*)$ public/$1 [L,QSA]
 </IfModule>
 
-# Deny access to sensitive files and directories
-<FilesMatch "^\.">
+# Deny access to sensitive files and directories (except .well-known for SSL verification)
+<FilesMatch "^\.(?!well-known)">
     Require all denied
 </FilesMatch>
 
