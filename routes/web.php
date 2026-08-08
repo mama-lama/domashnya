@@ -12,6 +12,12 @@ Route::get('/', [LandingController::class, 'index'])->name('landing');
 // Public Menu Page
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
+// Privacy Policy & Cookie Policy (152-FZ)
+Route::get('/privacy', function () {
+    $settings = \App\Models\Setting::all()->pluck('value', 'key');
+    return view('privacy', compact('settings'));
+})->name('privacy');
+
 // SEO XML Sitemap Route
 Route::get('/sitemap.xml', function () {
     $now = now()->toAtomString();
@@ -28,6 +34,12 @@ Route::get('/sitemap.xml', function () {
     <lastmod>' . $now . '</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>' . route('privacy') . '</loc>
+    <lastmod>' . $now . '</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>';
     return response($content, 200)->header('Content-Type', 'text/xml');

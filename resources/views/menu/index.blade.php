@@ -206,7 +206,8 @@
       <div class="footer__meta">
         <span>{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}</span>
         <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</a>
-        <span>© 2026 Домашняя кухня</span>
+        <a href="{{ route('privacy') }}" style="color: var(--muted, #888); text-decoration: underline;">Политика конфиденциальности</a>
+        <span>© {{ date('Y') }} Домашняя кухня</span>
       </div>
     </div>
   </footer>

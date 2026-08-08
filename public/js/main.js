@@ -522,4 +522,44 @@
       if (event.key === 'ArrowRight') hallLightboxNext.click();
     });
   }
+
+  // Cookie & Analytics Banner (152-FZ Compliance)
+  if (!localStorage.getItem('cookie_consent_accepted')) {
+    const banner = document.createElement('div');
+    banner.className = 'cookie-banner';
+    banner.style.cssText = 'position: fixed; bottom: 20px; right: 20px; left: 20px; max-width: 520px; margin: 0 auto; background: #ffffff; color: #333333; padding: 20px 24px; border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.18); border: 1px solid #e2e8f0; z-index: 9999; display: flex; flex-direction: column; gap: 14px; font-family: inherit; font-size: 14px; line-height: 1.5;';
+    banner.innerHTML = `
+      <div style="display: flex; align-items: flex-start; gap: 12px;">
+        <span style="font-size: 22px; line-height: 1;">🍪</span>
+        <div style="flex: 1; color: #334155; font-size: 13.5px;">
+          Наш сайт обрабатывает технические данные (файлы cookie, IP-адрес) и использует <strong>Яндекс.Метрику</strong> для анализа посещаемости. 
+          <a href="/privacy" style="color: #e65100; text-decoration: underline; font-weight: 600;">Политика конфиденциальности</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap;">
+        <button id="declineAnalyticsBtn" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 14px; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.2s;">Только необходимые</button>
+        <button id="acceptCookieBtn" style="background: #1e293b; color: #ffffff; border: none; border-radius: 8px; padding: 8px 18px; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.2s;">Принять все</button>
+      </div>
+    `;
+    document.body.appendChild(banner);
+
+    function closeBanner(acceptedAnalytics) {
+      localStorage.setItem('cookie_consent_accepted', 'true');
+      localStorage.setItem('cookie_analytics_accepted', acceptedAnalytics ? 'true' : 'false');
+      banner.style.opacity = '0';
+      banner.style.transform = 'translateY(20px)';
+      banner.style.transition = 'all 0.3s ease';
+      setTimeout(function () {
+        banner.remove();
+      }, 300);
+    }
+
+    document.getElementById('acceptCookieBtn').addEventListener('click', function () {
+      closeBanner(true);
+    });
+
+    document.getElementById('declineAnalyticsBtn').addEventListener('click', function () {
+      closeBanner(false);
+    });
+  }
 })();
