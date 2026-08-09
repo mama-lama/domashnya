@@ -55,7 +55,7 @@
         "alternateName": "Кафе и мотель у дороги на 465 км трассы М-4 Дон",
         "description": "Уютное придорожное кафе с домашней кухней, садом с фонтаном, верандой и комнатами под съём для отдыха автопутешественников.",
         "url": "{{ url('/') }}",
-        "telephone": "{{ $settings['phone_raw'] ?? '+79991234567' }}",
+        "telephone": "{{ $settings['phone_raw']}}",
         "priceRange": "₽₽",
         "servesCuisine": ["Русская", "Домашняя"],
         "image": "{{ asset('images/hero.webp') }}",
