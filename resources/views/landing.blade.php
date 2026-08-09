@@ -130,6 +130,49 @@
             }
           }
         ]
+      },
+      {
+        "@@type": "ItemList",
+        "@@id": "{{ url('/') }}#sitenav",
+        "name": "Быстрые ссылки навигации",
+        "itemListElement": [
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 1,
+            "name": "Главная",
+            "url": "{{ url('/') }}"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 2,
+            "name": "Меню кафе",
+            "url": "{{ route('menu') }}"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 3,
+            "name": "Комнаты и ночлег",
+            "url": "{{ url('/') }}#rooms-events"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 4,
+            "name": "Сад с фонтаном",
+            "url": "{{ url('/') }}#garden"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 5,
+            "name": "Отзывы гостей",
+            "url": "{{ url('/') }}#reviews"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 6,
+            "name": "Контакты и карта",
+            "url": "{{ url('/') }}#contacts"
+          }
+        ]
       }
     ]
   }

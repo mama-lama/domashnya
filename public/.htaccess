@@ -5,6 +5,15 @@
 
     RewriteEngine On
 
+    # Redirect /public/ in URL to root clean URL
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /public/([^\ ]*) [NC]
+    RewriteRule ^public/(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+    # Force HTTPS Redirect
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

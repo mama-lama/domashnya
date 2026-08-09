@@ -128,6 +128,11 @@
   <main>
     <section class="section" id="menu" style="padding-top: 48px;">
       <div class="container">
+        <nav class="breadcrumbs" aria-label="Хлебные крошки" style="font-size: 14px; color: var(--muted, #666); margin-bottom: 16px;">
+          <a href="{{ route('landing') }}" style="color: var(--brand, #e65100); text-decoration: none; font-weight: 500;">Главная</a>
+          <span style="margin: 0 8px; color: #ccc;">/</span>
+          <span style="color: var(--text, #333);">Меню кафе</span>
+        </nav>
         <div class="eyebrow">Меню кафе</div>
         <h1 class="section-title">Меню придорожного кафе «Домашняя кухня» на М-4 Дон</h1>
         <p class="section-subtitle">
