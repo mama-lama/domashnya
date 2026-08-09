@@ -7,7 +7,10 @@
   <meta name="description" content="Политика в отношении обработки технических данных, использования файлов cookie и сторонних сервисов (Яндекс.Метрика, Яндекс.Карты) на сайте придорожного комплекса «Домашняя кухня»." />
   <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="{{ route('privacy') }}" />
-  <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any" />
+  <!-- Favicons for Google, Yandex, Mobile & Browsers -->
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="apple-touch-icon" href="{{ asset('images/logo.webp') }}" />
   <link rel="stylesheet" href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}" />
 </head>
 <body>
@@ -15,7 +18,7 @@
     <div class="container header__inner">
       <a href="{{ route('landing') }}" class="brand" aria-label="Домашняя кухня у дороги">
         <span class="brand__icon">
-          <img src="{{ asset('images/logo.png') }}?v={{ filemtime(public_path('images/logo.png')) }}" alt="Домашняя кухня" />
+          <img src="{{ asset('images/logo.webp') }}?v={{ filemtime(public_path('images/logo.webp')) }}" alt="Домашняя кухня" />
         </span>
       </a>
       <nav class="nav">

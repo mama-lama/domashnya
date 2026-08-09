@@ -30,7 +30,7 @@ class MenuPdfTest extends TestCase
             'price' => 200,
             'weight' => '500 г',
             'category' => 'first',
-            'image_url' => '/images/menu/borch.png',
+            'image_url' => '/images/menu/borch.webp',
         ]);
 
         $outputPath = public_path('menu.pdf');

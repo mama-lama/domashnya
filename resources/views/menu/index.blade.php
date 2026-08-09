@@ -18,16 +18,18 @@
   <meta property="og:description" content="Посмотрите наше меню: свежие домашние обеды, выпечка и горячие напитки на 465 км М-4 Дон." />
   <meta property="og:url" content="{{ route('menu') }}" />
   <meta property="og:site_name" content="Домашняя кухня" />
-  <meta property="og:image" content="{{ asset('images/hero.png') }}" />
+  <meta property="og:image" content="{{ asset('images/hero.webp') }}" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Меню придорожного кафе «Домашняя кухня» на М-4 Дон" />
   <meta name="twitter:description" content="Цены и онлайн-меню домашних блюд на трассе М-4 Дон." />
-  <meta name="twitter:image" content="{{ asset('images/hero.png') }}" />
+  <meta name="twitter:image" content="{{ asset('images/hero.webp') }}" />
 
-  <!-- Favicon -->
-  <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any" />
+  <!-- Favicons for Google, Yandex, Mobile & Browsers -->
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="apple-touch-icon" href="{{ asset('images/logo.webp') }}" />
 
   <link rel="stylesheet" href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}" />
 
@@ -96,7 +98,7 @@
     <div class="container header__inner">
       <a href="{{ route('landing') }}" class="brand" aria-label="Домашняя кухня у дороги">
         <span class="brand__icon">
-          <img src="{{ asset('images/logo.png') }}?v={{ filemtime(public_path('images/logo.png')) }}" alt="Домашняя кухня у дороги" />
+          <img src="{{ asset('images/logo.webp') }}?v={{ filemtime(public_path('images/logo.webp')) }}" alt="Домашняя кухня у дороги" />
         </span>
       </a>
 

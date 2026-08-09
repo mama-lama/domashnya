@@ -295,7 +295,7 @@ button {
   border-radius: 36px;
   background:
     linear-gradient(270deg, rgba(251, 248, 241, 0.98) 0%, rgba(251, 248, 241, 0.94) 36%, rgba(251, 248, 241, 0.55) 55%, rgba(251, 248, 241, 0) 75%),
-    url('/images/hero.png') center/cover no-repeat;
+    url('/images/hero.webp') center/cover no-repeat;
   min-height: 760px;
   box-shadow: var(--shadow);
   border: 1px solid rgba(93, 127, 51, 0.12);

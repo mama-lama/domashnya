@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         // 2. Seed Settings
         $settings = [
             // General info
-            ['key' => 'site_title', 'value' => 'Домашняя кухня', 'group' => 'general'],
+            ['key' => 'site_title', 'value' => 'Кафе «Домашняя кухня» Князево М-4 «Дон» — Ночлег и обеды', 'group' => 'general'],
             ['key' => 'phone', 'value' => '+7 (920) 223-80-60', 'group' => 'general'],
             ['key' => 'phone_raw', 'value' => '+79202238060', 'group' => 'general'],
             ['key' => 'address', 'value' => 'ул. Сенновские Выселки, 12, д. Князево', 'group' => 'general'],
