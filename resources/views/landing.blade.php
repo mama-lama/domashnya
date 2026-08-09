@@ -211,7 +211,7 @@
           <li><a class="nav__link" href="#reviews">Отзывы</a></li>
           <li><a class="nav__link" href="#contacts">Карта</a></li>
         </ul>
-        <a class="btn btn--primary header__call" href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">
+        <a class="btn btn--primary header__call" href="tel:{{ $settings['phone_raw']}}">
           <span class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.1 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6.2 6.2l1.4-1.3a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9Z"/>
@@ -464,7 +464,7 @@
               </div>
               <div class="action-row">
                 <a class="btn btn--primary" href="#contacts">Узнать подробнее</a>
-                <a class="btn btn--outline" href="tel:{{ $settings['hotel_phone_raw'] ?? ($settings['phone_raw'] ?? '+79991234567') }}">Позвонить</a>
+                <a class="btn btn--outline" href="tel:{{ $settings['hotel_phone_raw']) }}">Позвонить</a>
               </div>
             </div>
           </article>
@@ -510,7 +510,7 @@
               </div>
               <div class="action-row">
                 <a class="btn btn--primary" href="#contacts">Узнать подробнее</a>
-                <a class="btn btn--outline" href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">Позвонить</a>
+                <a class="btn btn--outline" href="tel:{{ $settings['phone_raw']}}">Позвонить</a>
               </div>
             </div>
           </article>
@@ -596,7 +596,8 @@
                 </div>
                 <div>
                   <strong>Телефон</strong>
-                  <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}"><span style="white-space: pre-line;">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</span></a>
+                  <a href="tel:{{ $settings['phone_raw'] ?? '+74732070137' }}">+7 (473) 207-01-37 — Кафе</a><br>
+                  <a href="tel:{{ $settings['hotel_phone_raw'] ?? '+79202238060' }}">+7 (920) 223-80-60 — Гостиница</a>
                 </div>
               </div>
 
@@ -616,7 +617,7 @@
 
             <div class="action-row">
               <a class="btn btn--primary" href="https://yandex.ru/maps/?text={{ urlencode($settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево') }}" target="_blank" rel="noopener noreferrer">Построить маршрут</a>
-              <a class="btn btn--outline" href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">Позвонить</a>
+              <a class="btn btn--outline" href="tel:{{ $settings['phone_raw']}}">Позвонить</a>
             </div>
           </article>
 
@@ -677,7 +678,8 @@
       </div>
       <div class="footer__meta">
         <span>{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}</span>
-        <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}"><span style="white-space: pre-line;">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</span></a>
+        <a href="tel:{{ $settings['phone_raw']}}">+7 (473) 207-01-37 — Кафе</a><br>
+        <a href="tel:{{ $settings['hotel_phone_raw']}}">+7 (920) 223-80-60 — Гостиница</a>
         <a href="{{ route('privacy') }}" style="color: var(--muted, #888); text-decoration: underline;">Политика конфиденциальности</a>
         <span>© {{ date('Y') }} Домашняя кухня</span>
       </div>

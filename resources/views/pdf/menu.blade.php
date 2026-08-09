@@ -345,9 +345,8 @@
       <h1 class="cover-title">{{ $settings['site_title'] ?? 'Кафе «Домашняя кухня»' }}</h1>
       <div class="cover-address">{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}</div>
       <div class="cover-meta">
-        @if(!empty($settings['phone'])){{ $settings['phone'] }}@endif
-        @if(!empty($settings['phone']) && !empty($settings['working_hours'])) - @endif
-        @if(!empty($settings['working_hours'])){{ $settings['working_hours'] }}@endif
+        +7 (473) 207-01-37 — Кафе<br>+7 (920) 223-80-60 — Гостиница
+        @if(!empty($settings['working_hours'])) — {{ $settings['working_hours'] }}@endif
       </div>
       <p class="cover-welcome">
         {{ $settings['hero_description'] ?? 'Мы рады видеть наших посетителей! Здесь можно вкусно поесть, отдохнуть с дороги и провести время в приятной, по-домашнему уютной обстановке.' }}

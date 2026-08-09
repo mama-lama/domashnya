@@ -6,7 +6,6 @@
   // Mapping keys to friendly Russian labels
   $friendlyLabels = [
       'site_title' => 'Название сайта / заголовок страницы',
-      'phone' => 'Контактный телефон (для отображения)',
       'phone_raw' => 'Контактный телефон (только цифры, для ссылки tel:)',
       'hotel_phone_raw' => 'Номер гостиницы / комнат (только цифры, для ссылки tel:)',
       'address' => 'Адрес кафе',
@@ -36,12 +35,15 @@
       </div>
       
       @foreach($items as $item)
+      @if($item->key === 'phone')
+        @continue
+      @endif
       <div class="form-group">
         <label for="setting_{{ $item->key }}" class="form-label">
           {{ $friendlyLabels[$item->key] ?? str_replace('_', ' ', ucfirst($item->key)) }}
         </label>
         
-        @if(strlen($item->value) > 100 || in_array($item->key, ['hero_description', 'phone'], true))
+        @if(strlen($item->value) > 100 || in_array($item->key, ['hero_description'], true))
           <textarea 
             name="settings[{{ $item->key }}]" 
             id="setting_{{ $item->key }}" 

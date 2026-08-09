@@ -212,7 +212,8 @@
       </div>
       <div class="footer__meta">
         <span>{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}</span>
-        <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</a>
+        <a href="tel:{{ $settings['phone_raw'] ?? '+74732070137' }}">+7 (473) 207-01-37 — Кафе</a><br>
+        <a href="tel:{{ $settings['hotel_phone_raw'] ?? '+79202238060' }}">+7 (920) 223-80-60 — Гостиница</a>
         <a href="{{ route('privacy') }}" style="color: var(--muted, #888); text-decoration: underline;">Политика конфиденциальности</a>
         <span>© {{ date('Y') }} Домашняя кухня</span>
       </div>

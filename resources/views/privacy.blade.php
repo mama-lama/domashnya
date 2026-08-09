@@ -42,7 +42,7 @@
         <div style="background: #f8f9fa; border-left: 4px solid var(--brand, #e65100); padding: 14px 18px; margin: 12px 0; border-radius: 0 8px 8px 0; font-size: 14.5px;">
           <strong>Оператор:</strong> {{ $settings['company_name'] ?? 'Придорожный комплекс «Домашняя кухня»' }}<br />
           <strong>Адрес:</strong> {{ $settings['address'] ?? 'Воронежская обл., д. Князево, ул. Сенновские Выселки, д. 12 (465 км трассы М-4 «Дон»)' }}<br />
-          <strong>Телефон:</strong> {{ $settings['phone'] ?? '+7 (999) 123-45-67' }}<br />
+          <strong>Телефон:</strong> +7 (473) 207-01-37 — Кафе, +7 (920) 223-80-60 — Гостиница<br />
           @if(!empty($settings['inn']))
           <strong>ИНН:</strong> {{ $settings['inn'] }}<br />
           @endif
@@ -115,7 +115,7 @@
       <section style="margin-bottom: 28px; line-height: 1.7; color: var(--text, #333);">
         <h2 style="font-size: 19px; font-weight: 700; margin-bottom: 10px; color: var(--brand, #111);">8. Права Пользователя и порядок их реализации</h2>
         <p>8.1. Пользователь имеет право на получение информации, касающейся обработки его данных, на уточнение, блокирование или уничтожение сведений, а также на отзыв согласия.</p>
-        <p>8.2. Для реализации своих прав или получения разъяснений Пользователь может направить письменное обращение Оператору по адресу: <strong>{{ $settings['address'] ?? 'Воронежская обл., д. Князево, ул. Сенновские Выселки, 12' }}</strong> или по телефону <strong>{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</strong>.</p>
+        <p>8.2. Для реализации своих прав или получения разъяснений Пользователь может направить письменное обращение Оператору по адресу: <strong>{{ $settings['address'] ?? 'Воронежская обл., д. Князево, ул. Сенновские Выселки, 12' }}</strong> или по телефону <strong>+7 (473) 207-01-37 — Кафе, +7 (920) 223-80-60 — Гостиница</strong>.</p>
       </section>
 
       <div style="margin-top: 36px; padding-top: 24px; border-top: 1px dashed var(--border, #ccc); text-align: center;">
@@ -132,7 +132,8 @@
       </div>
       <div class="footer__meta">
         <span>{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}</span>
-        <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</a>
+        <a href="tel:{{ $settings['phone_raw'] ?? '+74732070137' }}">+7 (473) 207-01-37 — Кафе</a><br>
+        <a href="tel:{{ $settings['hotel_phone_raw'] ?? '+79202238060' }}">+7 (920) 223-80-60 — Гостиница</a>
         <a href="{{ route('privacy') }}" style="color: var(--muted, #888); text-decoration: underline;">Политика конфиденциальности</a>
         <span>© {{ date('Y') }} Домашняя кухня</span>
       </div>
