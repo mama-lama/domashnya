@@ -18,16 +18,18 @@
   <meta property="og:description" content="Посмотрите наше меню: свежие домашние обеды, выпечка и горячие напитки на 465 км М-4 Дон." />
   <meta property="og:url" content="{{ route('menu') }}" />
   <meta property="og:site_name" content="Домашняя кухня" />
-  <meta property="og:image" content="{{ asset('images/hero.png') }}" />
+  <meta property="og:image" content="{{ asset('images/hero.webp') }}" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Меню придорожного кафе «Домашняя кухня» на М-4 Дон" />
   <meta name="twitter:description" content="Цены и онлайн-меню домашних блюд на трассе М-4 Дон." />
-  <meta name="twitter:image" content="{{ asset('images/hero.png') }}" />
+  <meta name="twitter:image" content="{{ asset('images/hero.webp') }}" />
 
-  <!-- Favicon -->
-  <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any" />
+  <!-- Favicons for Google, Yandex, Mobile & Browsers -->
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="apple-touch-icon" href="{{ asset('images/logo.webp') }}" />
 
   <link rel="stylesheet" href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}" />
 
@@ -96,7 +98,7 @@
     <div class="container header__inner">
       <a href="{{ route('landing') }}" class="brand" aria-label="Домашняя кухня у дороги">
         <span class="brand__icon">
-          <img src="{{ asset('images/logo.png') }}?v={{ filemtime(public_path('images/logo.png')) }}" alt="Домашняя кухня у дороги" />
+          <img src="{{ asset('images/logo.webp') }}?v={{ filemtime(public_path('images/logo.webp')) }}" alt="Домашняя кухня у дороги" />
         </span>
       </a>
 
@@ -126,6 +128,11 @@
   <main>
     <section class="section" id="menu" style="padding-top: 48px;">
       <div class="container">
+        <nav class="breadcrumbs" aria-label="Хлебные крошки" style="font-size: 14px; color: var(--muted, #666); margin-bottom: 16px;">
+          <a href="{{ route('landing') }}" style="color: var(--brand, #e65100); text-decoration: none; font-weight: 500;">Главная</a>
+          <span style="margin: 0 8px; color: #ccc;">/</span>
+          <span style="color: var(--text, #333);">Меню кафе</span>
+        </nav>
         <div class="eyebrow">Меню кафе</div>
         <h1 class="section-title">Меню придорожного кафе «Домашняя кухня» на М-4 Дон</h1>
         <p class="section-subtitle">
@@ -205,8 +212,9 @@
       </div>
       <div class="footer__meta">
         <span>{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}</span>
-        <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}"><span style="white-space: pre-line;">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</span></a>
-        <span>© 2026 Домашняя кухня</span>
+        <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</a>
+        <a href="{{ route('privacy') }}" style="color: var(--muted, #888); text-decoration: underline;">Политика конфиденциальности</a>
+        <span>© {{ date('Y') }} Домашняя кухня</span>
       </div>
     </div>
   </footer>

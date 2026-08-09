@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://domashnya/</loc>
-    <lastmod>2026-08-08T22:00:00+03:00</lastmod>
+    <loc>https://cafe-knyazevo.ru/</loc>
+    <lastmod>2026-08-09T08:00:00+03:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://domashnya/menu</loc>
-    <lastmod>2026-08-08T22:00:00+03:00</lastmod>
+    <loc>https://cafe-knyazevo.ru/menu</loc>
+    <lastmod>2026-08-09T08:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://cafe-knyazevo.ru/privacy</loc>
+    <lastmod>2026-08-09T08:00:00+03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

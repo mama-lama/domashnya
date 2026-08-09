@@ -26,4 +26,4 @@ Allow: /menu
 Disallow: /admin
 Disallow: /admin/
 
-Sitemap: /sitemap.xml
+Sitemap: https://cafe-knyazevo.ru/sitemap.xml

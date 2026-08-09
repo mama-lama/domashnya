@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary SEO Meta Tags -->
-  <title>{{ $settings['site_title'] ?? 'Кафе «Домашняя кухня» и ночлег на трассе М-4 Дон (465 км, д. Князево) — вкусные обеды и комнаты под съём' }}</title>
+  <title>{{ (!empty($settings['site_title']) && $settings['site_title'] !== 'Домашняя кухня') ? $settings['site_title'] : 'Кафе «Домашняя кухня» Князево М-4 «Дон» — Ночлег и обеды' }}</title>
   <meta name="description" content="{{ $settings['site_description'] ?? 'Уютное придорожное кафе «Домашняя кухня» на 465 км трассы М-4 Дон (д. Князево). Домашние обеды (борщ, солянка, выпечка), сад с фонтаном, комнаты под съём для ночлега и удобная парковка.' }}" />
   <meta name="keywords" content="кафе на трассе м4 дон, придорожное кафе м4, мотель м4 дон князево, где поесть на трассе м4, домашняя кухня трасса м4, ночлег м4 дон князево, комнаты под съем м4 дон, 465 км м4 дон кафе, столовая у дороги, кафе с садом и фонтаном" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -14,20 +14,20 @@
   <!-- Open Graph / Facebook / Telegram -->
   <meta property="og:locale" content="ru_RU" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Кафе «Домашняя кухня» и ночлег на трассе М-4 Дон (465 км)" />
+  <meta property="og:title" content="Кафе «Домашняя кухня» Князево М-4 «Дон» — Ночлег и обеды" />
   <meta property="og:description" content="Уютное кафе у дороги: сытные домашние обеды, свежая выпечка, зеленый сад с фонтаном и комнаты под съём для ночлега автопутешественников." />
   <meta property="og:url" content="{{ url()->current() }}" />
   <meta property="og:site_name" content="Домашняя кухня — Кафе и мотель на М-4 Дон" />
-  <meta property="og:image" content="{{ asset('images/hero.png') }}" />
+  <meta property="og:image" content="{{ asset('images/hero.webp') }}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Придорожное кафе и мотель Домашняя кухня на трассе М-4 Дон" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Кафе «Домашняя кухня» и ночлег на трассе М-4 Дон (465 км)" />
+  <meta name="twitter:title" content="Кафе «Домашняя кухня» Князево М-4 «Дон» — Ночлег и обеды" />
   <meta name="twitter:description" content="Вкусные домашние обеды, ночлег в уютных комнатах и тихий отдых у дороги М-4 Дон." />
-  <meta name="twitter:image" content="{{ asset('images/hero.png') }}" />
+  <meta name="twitter:image" content="{{ asset('images/hero.webp') }}" />
 
   <!-- Geo Meta Tags for Yandex Maps & Local SEO -->
   <meta name="geo.region" content="RU-VOR" />
@@ -35,11 +35,14 @@
   <meta name="geo.position" content="52.3400;39.0800" />
   <meta name="ICBM" content="52.3400, 39.0800" />
 
-  <!-- Favicon -->
-  <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any" />
+  <!-- Favicons for Google, Yandex, Mobile & Browsers -->
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="apple-touch-icon" href="{{ asset('images/logo.webp') }}" />
 
   <link rel="stylesheet" href="{{ asset('css/main.css') }}?v={{ filemtime(public_path('css/main.css')) }}" />
-
+  <meta name="yandex-verification" content="b8bd60e37c3c4eca" />
+  <meta name="google-site-verification" content="Ru9BG4bHA3ezcDdihkyDW-DsJbdYOiVVCiQcJ9GAThs" />
   <!-- Schema.org Structured Data (JSON-LD) -->
   <script type="application/ld+json">
   {
@@ -55,7 +58,7 @@
         "telephone": "{{ $settings['phone_raw'] ?? '+79991234567' }}",
         "priceRange": "₽₽",
         "servesCuisine": ["Русская", "Домашняя"],
-        "image": "{{ asset('images/hero.png') }}",
+        "image": "{{ asset('images/hero.webp') }}",
         "address": {
           "@@type": "PostalAddress",
           "streetAddress": "{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}",
@@ -72,8 +75,8 @@
           {
             "@@type": "OpeningHoursSpecification",
             "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-            "opens": "08:00",
-            "closes": "22:00"
+            "opens": "00:00",
+            "closes": "23:59"
           }
         ],
         "hasMenu": "{{ route('menu') }}"
@@ -99,7 +102,7 @@
             "name": "Где находится кафе «Домашняя кухня» на трассе М-4 «Дон»?",
             "acceptedAnswer": {
               "@@type": "Answer",
-              "text": "Кафе расположено на 465-м километре трассы М-4 «Дон» по адресу: Воронежская область, деревня Князево, ул. Сенновские Выселки, д. 12."
+              "text": "Кафе расположено на 465-м километре трассы М-4 «Дон» по адресу: Воронежская область, деревня Князево, ул. Сенновские Выселки, д. 12 (удобный съезд с трассы, направление с юга)."
             }
           },
           {
@@ -115,7 +118,7 @@
             "name": "Какой режим работы у кафе «Домашняя кухня»?",
             "acceptedAnswer": {
               "@@type": "Answer",
-              "text": "Кафе работает ежедневно с 08:00 до 22:00. Горячие обеды, супы и выпечка всегда подаются свежими."
+              "text": "Кафе работает круглосуточно. Горячие обеды, супы и выпечка всегда подаются свежими."
             }
           },
           {
@@ -127,17 +130,73 @@
             }
           }
         ]
+      },
+      {
+        "@@type": "ItemList",
+        "@@id": "{{ url('/') }}#sitenav",
+        "name": "Быстрые ссылки навигации",
+        "itemListElement": [
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 1,
+            "name": "Главная",
+            "url": "{{ url('/') }}"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 2,
+            "name": "Меню кафе",
+            "url": "{{ route('menu') }}"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 3,
+            "name": "Комнаты и ночлег",
+            "url": "{{ url('/') }}#rooms-events"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 4,
+            "name": "Сад с фонтаном",
+            "url": "{{ url('/') }}#garden"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 5,
+            "name": "Отзывы гостей",
+            "url": "{{ url('/') }}#reviews"
+          },
+          {
+            "@@type": "SiteNavigationElement",
+            "position": 6,
+            "name": "Контакты и карта",
+            "url": "{{ url('/') }}#contacts"
+          }
+        ]
       }
     ]
   }
   </script>
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111424038', 'ym');
+
+      ym(111424038, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/111424038" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
 </head>
 <body>
   <header class="header">
     <div class="container header__inner">
       <a href="#home" class="brand" aria-label="Домашняя кухня у дороги">
         <span class="brand__icon">
-          <img src="{{ asset('images/logo.png') }}?v={{ filemtime(public_path('images/logo.png')) }}" alt="Домашняя кухня у дороги" />
+          <img src="{{ asset('images/logo.webp') }}?v={{ filemtime(public_path('images/logo.webp')) }}" alt="Домашняя кухня у дороги" />
         </span>
       </a>
 
@@ -169,7 +228,7 @@
       <div class="container">
         <div class="hero__wrap">
           <div class="hero__image">
-            <img src="{{ asset('images/hero.png') }}?v={{ filemtime(public_path('images/hero.png')) }}" alt="Домашняя кухня — уютное кафе у дороги" loading="eager" />
+            <img src="{{ asset('images/hero.webp') }}?v={{ filemtime(public_path('images/hero.webp')) }}" alt="Домашняя кухня — уютное кафе у дороги" loading="eager" />
           </div>
           <div class="hero__content">
             <h1>{{ $settings['hero_title'] ?? 'Домашняя кухня, ночлег и спокойный отдых на трассе М-4 «Дон»' }}</h1>
@@ -550,7 +609,7 @@
                 </div>
                 <div>
                   <strong>Часы работы</strong>
-                  <span>{{ $settings['working_hours'] ?? 'Ежедневно с 08:00 до 22:00' }}</span>
+                  <span>{{ $settings['working_hours'] ?? 'Круглосуточно' }}</span>
                 </div>
               </div>
             </div>
@@ -581,7 +640,7 @@
           <details style="background: var(--bg, #f9f9f9); border: 1px solid var(--border, #e5e5e5); border-radius: 12px; padding: 18px 24px; cursor: pointer;">
             <summary style="font-weight: 700; font-size: 17px; color: var(--text, #222);">Где находится кафе «Домашняя кухня» на трассе М-4 «Дон»?</summary>
             <p style="margin-top: 12px; color: var(--muted, #666); line-height: 1.6;">
-              Кафе расположено на 465-м километре трассы М-4 «Дон» по адресу: Воронежская область, деревня Князево, ул. Сенновские Выселки, 12 (удобный съезд с трассы, направление на юг).
+              Кафе расположено на 465-м километре трассы М-4 «Дон» по адресу: Воронежская область, деревня Князево, ул. Сенновские Выселки, 12 (удобный съезд с трассы, направление с юга).
             </p>
           </details>
 
@@ -595,7 +654,7 @@
           <details style="background: var(--bg, #f9f9f9); border: 1px solid var(--border, #e5e5e5); border-radius: 12px; padding: 18px 24px; cursor: pointer;">
             <summary style="font-weight: 700; font-size: 17px; color: var(--text, #222);">Какой режим работы у кафе «Домашняя кухня»?</summary>
             <p style="margin-top: 12px; color: var(--muted, #666); line-height: 1.6;">
-              Кафе работает ежедневно с 08:00 до 22:00. Горячие супы (борщ, солянка), основные блюда, свежая домашняя выпечка и горячие напитки всегда подаются свежими.
+              Кафе работает круглосуточно. Горячие супы (борщ, солянка), основные блюда, свежая домашняя выпечка и горячие напитки всегда подаются свежими.
             </p>
           </details>
 
@@ -619,7 +678,8 @@
       <div class="footer__meta">
         <span>{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}</span>
         <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}"><span style="white-space: pre-line;">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</span></a>
-        <span>© 2026 Домашняя кухня</span>
+        <a href="{{ route('privacy') }}" style="color: var(--muted, #888); text-decoration: underline;">Политика конфиденциальности</a>
+        <span>© {{ date('Y') }} Домашняя кухня</span>
       </div>
     </div>
   </footer>

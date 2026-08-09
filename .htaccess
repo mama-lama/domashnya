@@ -1,7 +1,12 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Redirect all requests to the public directory
+    # 1. Force HTTPS Redirect (without appending /public/)
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+    # 2. Rewrite all requests to public directory
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L,QSA]
 </IfModule>
