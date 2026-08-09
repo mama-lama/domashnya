@@ -8,6 +8,7 @@
       'site_title' => 'Название сайта / заголовок страницы',
       'phone' => 'Контактный телефон (для отображения)',
       'phone_raw' => 'Контактный телефон (только цифры, для ссылки tel:)',
+      'hotel_phone_raw' => 'Номер гостиницы / комнат (только цифры, для ссылки tel:)',
       'address' => 'Адрес кафе',
       'working_hours' => 'Часы работы',
       'hero_tag' => 'Мини-заголовок (тэг) на главном баннере',
@@ -40,13 +41,13 @@
           {{ $friendlyLabels[$item->key] ?? str_replace('_', ' ', ucfirst($item->key)) }}
         </label>
         
-        @if(strlen($item->value) > 100 || $item->key === 'hero_description')
+        @if(strlen($item->value) > 100 || in_array($item->key, ['hero_description', 'phone'], true))
           <textarea 
             name="settings[{{ $item->key }}]" 
             id="setting_{{ $item->key }}" 
             rows="4" 
             class="form-control"
-            style="resize: vertical;"
+            style="resize: vertical; white-space: pre-wrap;"
           >{{ old('settings.'.$item->key, $item->value) }}</textarea>
         @else
           <input 

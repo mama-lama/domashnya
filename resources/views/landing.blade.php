@@ -405,7 +405,7 @@
               </div>
               <div class="action-row">
                 <a class="btn btn--primary" href="#contacts">Узнать подробнее</a>
-                <a class="btn btn--outline" href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">Позвонить</a>
+                <a class="btn btn--outline" href="tel:{{ $settings['hotel_phone_raw'] ?? ($settings['phone_raw'] ?? '+79991234567') }}">Позвонить</a>
               </div>
             </div>
           </article>
@@ -537,7 +537,7 @@
                 </div>
                 <div>
                   <strong>Телефон</strong>
-                  <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</a>
+                  <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}"><span style="white-space: pre-line;">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</span></a>
                 </div>
               </div>
 
@@ -618,7 +618,7 @@
       </div>
       <div class="footer__meta">
         <span>{{ $settings['address'] ?? 'ул. Сенновские Выселки, 12, д. Князево' }}</span>
-        <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</a>
+        <a href="tel:{{ $settings['phone_raw'] ?? '+79991234567' }}"><span style="white-space: pre-line;">{{ $settings['phone'] ?? '+7 (999) 123-45-67' }}</span></a>
         <span>© 2026 Домашняя кухня</span>
       </div>
     </div>
