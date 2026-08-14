@@ -464,7 +464,7 @@
               </div>
               <div class="action-row">
                 <a class="btn btn--primary" href="#contacts">Узнать подробнее</a>
-                <a class="btn btn--outline" href="tel:{{ $settings['hotel_phone_raw']) }}">Позвонить</a>
+                <a class="btn btn--outline" href="tel:{{ $settings['hotel_phone_raw'] }}">Позвонить</a>
               </div>
             </div>
           </article>
